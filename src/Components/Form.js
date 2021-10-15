@@ -101,19 +101,16 @@ export default function Form (){
                                 <input 
                                 type='checkbox'
                                 name='pineapple'
-                                checked={true}
                                 />
                             </label>
                     </div>
 
                     <div className='substitute'>
                         <h3>Choice of Substitute</h3>
-                        <h4>choose up to 1</h4>
                             <label id='special-text'>Gluten Free Crust +$3.00
                                 <input 
                                     type='checkbox'
                                     name='gluten-free'
-                                    checked={true}
                                 />
                             </label>
                     </div>
