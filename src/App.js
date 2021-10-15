@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Route, Link } from "react-router-dom"
 import axios from 'axios'
 import schema from './Components/formSchema'
+import * as yup from 'yup'
 
 
 
@@ -17,28 +18,24 @@ const initialFormValues = {
 
   customer: '',
   size: '',
-  sauce: '',
-  pepperoni: false,
-  sausage: false,
-  spinach: false,
-  cheese: false,
-  pineapple: false,
   instructions: '',
+  pepperoni: 'false',
+  sausage: 'false',
+  spinach: 'false',
+  cheese: 'false',
+  pineapple: 'false',
 }
 
 
 const initialFormValuesErrors = {
   customer: '',
   size: '',
-  sauce: '',
+  toppings:''
 }
 
 const initialCustomers = []
 const initialDisabled = true
 
-const formSubmit = () => {
-
-}
 
 export default function App() {
 
@@ -47,35 +44,45 @@ export default function App() {
   const [formErrors, setFormErrors] = useState(initialFormValuesErrors)
   const [disabled, setDisabled] = useState(initialDisabled)
 
-
-  const inputChange = (event) => {
-    const name = event.target.value
-    setFormValues({ ...formValues, customer: name })
-    console.log(name)
-  }
-
-  const sizeInputChange = (event) => {
-    const sauce = event.target.value
-    setFormValues({...formValues, sauce: sauce})
-    console.log(sauce)
-  }
-
   const postNewCustomer = newCustomer => {
-    axios.post('https://reqres.in/api/orders`', newCustomer)
+    axios.post('https://reqres.in/api/users', newCustomer)
       .then(resp => {
-        setCustomers([resp.data, ...customers]);
+        setCustomers([resp.data, ...customers])
       })
       .catch(err => {
         console.error(err);
       })
-      .finally(() => {
-        setFormValues(initialFormValuesErrors);
+      .finally(()=> {
+        setFormValues(initialFormValues)
       })
   }
 
+  const validate=(name, value) => {
+    yup.reach(schema, name)
+      .validate(value)
+      .then(() => setFormErrors({...formErrors, [name]: '' }))
+      .catch(err => setFormErrors({ ...formErrors, [name]: err.errors[0]}))
+  }
+
+  const inputChange = (name, value) => {
+    validate(name,value);
+    setFormValues({ ...formValues, [name]: value })
+  }
+
+  const formSubmit = () => {
+    const newCustomer = {
+      customer: formValues.customer.trim(),
+      sauce: formValues.toppings,
+      size: formValues.size,
+    }
+    postNewCustomer(newCustomer);
+  }
+
   useEffect(() => {
-    
-  }, [])
+    schema.isValid(formValues).then(valid => setDisabled(!valid))
+  }, [formValues])
+
+  
 
   // console.log(formValues.size)
   // console.log(formValues.sauce)
@@ -99,8 +106,10 @@ export default function App() {
               <Route path='/form'>
                 <Form 
                 inputChange={inputChange}
-                sizeInputChange={sizeInputChange}
-                disableButton={!formValues.size && !formValues.sauce ? true : false} 
+                
+                disabled={!formValues.size && !formValues.sauce ? true : false} 
+                submit={formSubmit}
+                errors={formErrors}
                 />
               </Route>
 

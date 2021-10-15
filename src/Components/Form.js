@@ -8,12 +8,22 @@ const DivStyled = styled.h3`
 
 export default function Form (props) {
 
-    const { inputChange, disableButton } = props 
+    const { inputChange, disabled, submit, errors, } = props 
 
     return (
         <div className='build'>
             <h2>Build Your Own</h2>
             
+            <div className='errors'>
+                    <div> {errors.customer} </div> 
+                    <div> {errors.size} </div>
+                    <div> {errors.pepperoni} </div>
+                    <div> {errors.sausage} </div>
+                    <div> {errors.spinach} </div>
+                    <div> {errors.cheese} </div>
+                    <div> {errors.pineapple} </div>
+            </div>
+
                 <form id='pizza-form'>
                     <label>Name:&nbsp;&nbsp;
                         <input 
@@ -39,39 +49,6 @@ export default function Form (props) {
                             </label>
                     </div>
                     
-                    <div className='sauce'>
-                        <h3>Choice of Sauce</h3>
-                        <h4>Required:</h4>
-                            <label>Original Red
-                                <input
-                                type='radio'
-                                name='original'
-                                value='original'
-                                />
-                            </label>
-                            <label>Garlic Ranch
-                                <input
-                                type='radio'
-                                name='ranch'
-                                value='ranch'
-                                />
-                            </label>
-                            <label>BBQ Sauce
-                                <input
-                                type='radio'
-                                name='bbq'
-                                value='bbq'
-                                />
-                            </label>
-                            <label>Spinach Alfredo
-                                <input
-                                type='radio'
-                                name='alfredo'
-                                value='alfredo'
-                                value={props.selected}
-                                />
-                            </label>
-                    </div>
 
                     <div className='toppings'>
                         <h3>Add Toppings</h3>
@@ -129,7 +106,7 @@ export default function Form (props) {
                     </div>
 
                     <div className='submit'>
-                        <button disabled={disableButton} id='order-button'>Add to Order</button>
+                        <button disabled={disabled} id='order-button'>Add to Order</button>
 
                     </div>
                 </form>
