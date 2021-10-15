@@ -63,7 +63,12 @@ img{
   background-color: white;
   
 }
+
 div{
   padding: 5px;
   text-align: center;
+}
+
+.customer-container p{
+  text-align: left;
 }

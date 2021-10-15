@@ -28,7 +28,6 @@ const initialFormValues = {
 
 
 const initialFormValuesErrors = {
-  name: '',
   customer: '',
   size: '',
   sauce: '',
@@ -36,10 +35,6 @@ const initialFormValuesErrors = {
 
 const initialCustomers = []
 const initialDisabled = true
-
-const inputChange = (name, value) => {
-
-}
 
 const formSubmit = () => {
 
@@ -53,10 +48,37 @@ export default function App() {
   const [disabled, setDisabled] = useState(initialDisabled)
 
 
+  const inputChange = (event) => {
+    const name = event.target.value
+    setFormValues({ ...formValues, customer: name })
+    console.log(name)
+  }
+
+  const sizeInputChange = (event) => {
+    const sauce = event.target.value
+    setFormValues({...formValues, sauce: sauce})
+    console.log(sauce)
+  }
+
+  const postNewCustomer = newCustomer => {
+    axios.post('https://reqres.in/api/orders`', newCustomer)
+      .then(resp => {
+        setCustomers([resp.data, ...customers]);
+      })
+      .catch(err => {
+        console.error(err);
+      })
+      .finally(() => {
+        setFormValues(initialFormValuesErrors);
+      })
+  }
+
   useEffect(() => {
     
   }, [])
 
+  // console.log(formValues.size)
+  // console.log(formValues.sauce)
 
   return (
     <div className='App'>
@@ -68,19 +90,28 @@ export default function App() {
                         <Link to='/customers'>Customers</Link>
                     </nav>
             </header>
+
+
               <Route> 
-        <Home exact path='/' />
-      </Route>
+                <Home exact path='/' />
+              </Route>
 
-      <Route path='/form'>
-        <Form />
-      </Route>
+              <Route path='/form'>
+                <Form 
+                inputChange={inputChange}
+                sizeInputChange={sizeInputChange}
+                disableButton={!formValues.size && !formValues.sauce ? true : false} 
+                />
+              </Route>
 
-      <Route path='/customers'> 
-        <Customer />
-      </Route>
+            <Route path='/customers'>
+              <Customer />
+            </Route>
 
-        
-  </div>
+      <div className='main-container'>
+        <Eats />
+      </div>
+      
+    </div>
   );
 }

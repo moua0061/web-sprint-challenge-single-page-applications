@@ -11,12 +11,8 @@ const Home = () => {
                 </div>
 
                 <div className='order-button'>
-                    <button id='orderBtn' to='/pizza'>Order Now!</button>
+                    <Link to='/form'><button id='orderBtn' to='/pizza'>Order Now!</button></Link>
                 </div> 
-                
-                <div className='main-container'>
-                    <Eats />
-                </div>
             </div>
 
     )

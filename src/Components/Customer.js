@@ -10,7 +10,7 @@ function Customer (){
             <p>Sauce: </p>
             <p>Toppings: </p>
             <p>Choice of substitute: </p>
-            <p>Special Instructions: </p>
+            <p>Special Instructions:</p>
 
         </div>
     )

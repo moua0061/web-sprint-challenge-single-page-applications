@@ -6,15 +6,19 @@ const DivStyled = styled.h3`
 `;
 
 
-export default function Form (){
+export default function Form (props) {
+
+    const { inputChange, disableButton } = props 
+
     return (
         <div className='build'>
             <h2>Build Your Own</h2>
             
                 <form id='pizza-form'>
-                    <label>Name:
+                    <label>Name:&nbsp;&nbsp;
                         <input 
                         name='name-input'
+                        onChange={inputChange}
                         type='text'
                         id='name-input'
                         />
@@ -43,7 +47,6 @@ export default function Form (){
                                 type='radio'
                                 name='original'
                                 value='original'
-                                checked={true}
                                 />
                             </label>
                             <label>Garlic Ranch
@@ -65,6 +68,7 @@ export default function Form (){
                                 type='radio'
                                 name='alfredo'
                                 value='alfredo'
+                                value={props.selected}
                                 />
                             </label>
                     </div>
@@ -125,10 +129,9 @@ export default function Form (){
                     </div>
 
                     <div className='submit'>
-                        <button disabled={true} id='order-button'>Add to Order</button>
+                        <button disabled={disableButton} id='order-button'>Add to Order</button>
 
                     </div>
-
                 </form>
         </div>
         

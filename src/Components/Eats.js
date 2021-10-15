@@ -5,6 +5,9 @@ import React from 'react'
 
 export default function Eats (){
     return (
-        <p>Food Delivery in Gotham City</p>
+        <div>
+            <p>Food Delivery in Gotham City</p>
+            <p>Selections from resturants in your area!</p>
+        </div>
     )
 }
