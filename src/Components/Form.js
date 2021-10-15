@@ -1,14 +1,22 @@
-import React from 'react'
-import styled from 'styled-components'
 
-const DivStyled = styled.h3`
-    background: grey;
-`;
+import React from 'react'
+
 
 
 export default function Form (props) {
 
-    const { inputChange, disabled, submit, errors, } = props 
+    const { values, change,  disabled, submit, errors, } = props 
+
+    const onSubmit = event => {
+        event.preventDefault()
+        submit()
+    }
+
+    const onChange = event => {
+        const {name, value, checked, type} = event.target;
+        const valueToUse = type === 'checked' ? checked : value;
+            change(name, valueToUse)
+    }
 
     return (
         <div className='build'>
@@ -24,13 +32,14 @@ export default function Form (props) {
                     <div> {errors.pineapple} </div>
             </div>
 
-                <form id='pizza-form'>
+                <form id='pizza-form' onSubmit={onSubmit}>
                     <label>Name:&nbsp;&nbsp;
                         <input 
                         name='name-input'
-                        onChange={inputChange}
+                        onChange={onChange}
                         type='text'
                         id='name-input'
+                        value={values.customer}
                         />
                     </label>
 
@@ -57,18 +66,24 @@ export default function Form (props) {
                                 <input 
                                 type='checkbox'
                                 name='pepperoni'
+                                values={values.pepperoni}
+                                onChange={onchange}
                                 />
                             </label>
                             <label>sausage
                                 <input 
                                 type='checkbox'
                                 name='sausage'
+                                values={values.sausage}
+                                onChange={onchange}
                                 />
                             </label>
                             <label>spinach
                                 <input 
                                 type='checkbox'
                                 name='spinach'
+                                values={values.spinach}
+                                onChange={onchange}
                                 />
                             </label>
 
@@ -76,12 +91,16 @@ export default function Form (props) {
                                 <input 
                                 type='checkbox'
                                 name='cheese'
+                                values={values.cheese}
+                                onChange={onchange}
                                 />
                             </label>
                             <label>pineapple
                                 <input 
                                 type='checkbox'
                                 name='pineapple'
+                                values={values.pineapple}
+                                onChange={onchange}
                                 />
                             </label>
                     </div>
@@ -92,6 +111,8 @@ export default function Form (props) {
                                 <input 
                                     type='checkbox'
                                     name='gluten-free'
+                                    values={values.instructions}
+                                    onChange={onchange}
                                 />
                             </label>
                     </div>

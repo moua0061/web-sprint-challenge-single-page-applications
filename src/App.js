@@ -29,7 +29,6 @@ const initialFormValues = {
 
 const initialFormValuesErrors = {
   customer: '',
-  size: '',
 }
 
 const initialCustomers = []
@@ -81,10 +80,6 @@ export default function App() {
     schema.isValid(formValues).then(valid => setDisabled(!valid))
   }, [formValues])
 
-  
-
-  // console.log(formValues.size)
-  // console.log(formValues.sauce)
 
   return (
     <div className='App'>
@@ -104,7 +99,8 @@ export default function App() {
 
               <Route path='/form'>
                 <Form 
-                inputChange={inputChange}
+                values={formValues}
+                change={inputChange}
                 disabled={!formValues.size && !formValues.sauce ? true : false} 
                 submit={formSubmit}
                 errors={formErrors}

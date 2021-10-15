@@ -5,11 +5,14 @@ describe('Lambda Eats App', () => {
         cy.visit('http://localhost:3000');
     })
     //declaring variables for my stuff with their input names/id
-    const name = () => cy.get('input[id=name-input');
-    const instructions = () => cy.get('input[name=instructions]');
+    const nameInput = () => cy.get('input[id=name-input');
+    const instructionsInput = () => cy.get('input[name=instructions]');
     const submitButton = () => cy.get("button[id='order-button']");
-    const toppings = () => cy.get('[type="checkbox"]');
-    const sizeS = () => cy.get(['input[name=pepperoni]']);
+    const toppingsInput = () => cy.get('[type="checkbox"]');
+    const sInput = () => cy.get('select').select('Small 8"').should('have.value', 'small')
+    const mInput = () => cy.get('select').select('Medium 12"').should('have.value', 'medium')
+    const lInput = () => cy.get('select').select('Large 16"').should('have.value', 'large')
+    const xlInput = () => cy.get('select').select('Xtra Large 20"').should('have.value', 'xl')
 
     //sanity check
     it('sanity check to make sure tests work', () => {
@@ -19,11 +22,14 @@ describe('Lambda Eats App', () => {
 
     it('the proper elements are showing', () => {
         //these inputs should exist
-        name().should('exist');
-        instructions().should('exist');
+        nameInput().should('exist');
+        instructionsInput().should('exist');
         submitButton().should('exist');
-        toppings().should('exist');
-        sizeS().should('exist');
+        toppingsInput().should('exist');
+        sInput().should('exist');
+        mInput().should('exist');
+        lInput().should('exist');
+        xlInput().should('exist');
     })
 
     describe('filling out the inputs and submitting', () => {
@@ -40,34 +46,24 @@ describe('Lambda Eats App', () => {
 
         //ability to type in the inputs
         it('stuff can be typed in the inputs', () => {
-            fnameInput()
+            nameInput()
                 .should('have.value', '')
                 .type('Redd')
                 .should('have.value', 'Redd');
-            lnameInput()
+            instructionsInput()
                 .should('have.value', '')
-                .type('Mama')
-                .should('have.value', 'Mama');
-            passwordInput()
-                .should('have.value', '')
-                .type('password')
-                .should('have.value', 'password');
-            emailInput()
-                .should('have.value', '')
-                .type('moua0061@yahoo.com')
-                .should('have.value', 'moua0061@yahoo.com')
-            termBox()
+                .type('cute in squares')
+                .should('have.value', 'cut in squares');
+            toppingsInput()
                 .check({force:true})
                 .should('be.checked');
         })
 
         //submit button should not be disabled after filling out fields & terms of service box is checked
         it('submit button should work after all fields are entered and checked', () => {
-            fnameInput().type('Redd');
-            lnameInput().type('Mama');
-            emailInput().type('moua0061@yahoo.com');
-            passwordInput().type('password');
-            termBox().should('be.checked');
+            nameInput().type('Redd');
+            instructionsInput().type('add hot sauce please');
+            toppingsInput().should('be.checked');
             submitButton().should('not.be.disabled');
         })
     })
