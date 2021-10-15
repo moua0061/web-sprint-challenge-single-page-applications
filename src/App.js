@@ -30,7 +30,6 @@ const initialFormValues = {
 const initialFormValuesErrors = {
   customer: '',
   size: '',
-  toppings:''
 }
 
 const initialCustomers = []
@@ -106,7 +105,6 @@ export default function App() {
               <Route path='/form'>
                 <Form 
                 inputChange={inputChange}
-                
                 disabled={!formValues.size && !formValues.sauce ? true : false} 
                 submit={formSubmit}
                 errors={formErrors}
